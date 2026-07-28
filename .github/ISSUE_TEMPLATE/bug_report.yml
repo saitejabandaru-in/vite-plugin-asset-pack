@@ -1,0 +1,32 @@
+name: Bug Report
+description: Create a report to help us improve the zero-dependency asset engine
+title: "[BUG] "
+labels: ["bug"]
+assignees: ""
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! 
+  - type: input
+    id: version
+    attributes:
+      label: Plugin Version
+      description: What version of vite-plugin-asset-pack are you using?
+      placeholder: e.g. 1.0.0
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: What happened? What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction Code or SVG
+      description: Please provide the SVG string or vite.config.ts configuration that caused the issue.
+    validations:
+      required: true
