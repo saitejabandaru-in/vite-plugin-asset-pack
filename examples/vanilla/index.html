@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite Plugin Asset Pack - Example</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        text-align: center;
+        padding: 4rem;
+        background: #111;
+        color: #fff;
+      }
+      .logo {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 2rem;
+      }
+      .card {
+        background: #222;
+        padding: 2rem;
+        border-radius: 12px;
+        display: inline-block;
+        border: 1px solid #333;
+      }
+      .stats {
+        color: #4ade80;
+        font-weight: bold;
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="card">
+      <img id="logo-img" class="logo" alt="Logo" />
+      <h1>Vite + Asset Pack</h1>
+      <p>This logo SVG was automatically minified and inlined!</p>
+      <p class="stats">Check the Network tab or view dist/asset-manifest.json after building.</p>
+    </div>
+    <script type="module" src="/main.ts"></script>
+  </body>
+</html>

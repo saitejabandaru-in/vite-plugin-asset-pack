@@ -23,6 +23,7 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "track": "tsx scripts/track-metrics.ts",
+    "dev:example": "npm run build && cd examples/vanilla && npm install && npm run dev",
     "prepublishOnly": "npm run typecheck && npm test && npm run build"
   },
   "keywords": [

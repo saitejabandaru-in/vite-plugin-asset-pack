@@ -109,6 +109,17 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
 
         if (originalSize <= inlineThresholdBytes) {
           const dataUri = toSvgDataUri(minified);
+          
+          statsMap.set(id, {
+            filename: id + ' (inlined)',
+            originalSize,
+            optimizedSize,
+            savedBytes: Math.max(0, originalSize - optimizedSize),
+            savingsRatio: originalSize > 0
+              ? `${(((originalSize - optimizedSize) / originalSize) * 100).toFixed(1)}%`
+              : '0%',
+          });
+
           return {
             code: `export default ${JSON.stringify(dataUri)};`,
             map: null,

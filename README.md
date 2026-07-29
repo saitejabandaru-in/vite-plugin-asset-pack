@@ -5,7 +5,24 @@
 [![bundle size](https://img.shields.io/bundlephobia/minzip/vite-plugin-asset-pack)](https://bundlephobia.com/package/vite-plugin-asset-pack)
 [![license](https://img.shields.io/npm/l/vite-plugin-asset-pack)](./LICENSE)
 
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/maintainer/vite-plugin-asset-pack/tree/main/examples/vanilla)
+
 An ultra-fast, **zero-dependency** Vite plugin for build-time SVG minification, automatic asset inlining, and asset manifest generation.
+
+---
+
+## 🎮 Try it Online
+
+Experience the zero-dependency minifier instantly in your browser:
+* [**Vanilla Vite Example**](https://stackblitz.com/github/maintainer/vite-plugin-asset-pack/tree/main/examples/vanilla)
+
+Or run the example locally:
+```bash
+git clone https://github.com/maintainer/vite-plugin-asset-pack.git
+cd vite-plugin-asset-pack
+npm install
+npm run dev:example
+```
 
 ---
 
