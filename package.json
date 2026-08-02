@@ -53,7 +53,7 @@
     "@semantic-release/git": "^10.0.1",
     "@types/node": "^20.11.0",
     "@types/svgo": "^2.6.4",
-    "semantic-release": "^23.0.0",
+    "semantic-release": "^25.0.8",
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
