@@ -135,13 +135,13 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
               }
               
               optimized = await processor.toBuffer();
-              if (cache) setCachedAsset(cacheKey, optimized);
+              if (cache) setCachedAsset(cacheKey, optimized!);
             }
 
             // Only use optimized if it's actually smaller
-            if (optimized.byteLength < origSize) {
-              fileAsset.source = new Uint8Array(optimized);
-              recordStat(fileName, origSize, optimized.byteLength);
+            if (optimized!.byteLength < origSize) {
+              fileAsset.source = new Uint8Array(optimized!);
+              recordStat(fileName, origSize, optimized!.byteLength);
             } else {
               recordStat(fileName, origSize, origSize);
             }
