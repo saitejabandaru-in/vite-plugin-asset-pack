@@ -15,8 +15,10 @@ An advanced, enterprise-grade Vite plugin for build-time SVG minification, raste
 
 Experience the powerful image compression engine instantly in your browser:
 * [**Vanilla Vite Example**](https://stackblitz.com/github/saitejabandaru-in/vite-plugin-asset-pack/tree/main/examples/vanilla)
+* [**React Example**](https://stackblitz.com/github/saitejabandaru-in/vite-plugin-asset-pack/tree/main/examples/react)
+* [**Vue Example**](https://stackblitz.com/github/saitejabandaru-in/vite-plugin-asset-pack/tree/main/examples/vue)
 
-Or run the example locally:
+Or run the examples locally:
 ```bash
 git clone https://github.com/saitejabandaru-in/vite-plugin-asset-pack.git
 cd vite-plugin-asset-pack
