@@ -62,7 +62,7 @@
     "typescript": "^7.0.2",
     "vite": "^5.0.12",
     "vitepress": "^1.6.4",
-    "vitest": "^1.2.1",
+    "vitest": "^4.1.10",
     "vue": "^3.5.40"
   },
   "repository": {
