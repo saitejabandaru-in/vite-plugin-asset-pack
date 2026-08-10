@@ -16,8 +16,8 @@ hero:
 features:
   - title: ⚡️ SVGO & Sharp Powered
     details: Uses industry-standard SVGO for AST-based vector minification and Sharp for raster image compression.
-  - title: 🛠️ Auto-WebP Conversion
-    details: Instantly convert heavy JPEGs and PNGs into Next-Gen WebP formats with a single boolean flag.
+  - title: 🛠️ Auto-WebP & AVIF Conversion
+    details: Instantly convert heavy JPEGs and PNGs into Next-Gen WebP and AVIF formats with a single boolean flag.
   - title: 📊 Beautiful Terminal Reports
     details: Generates a stunning colored summary table of your saved bytes directly in the Vite terminal during build.
 ---

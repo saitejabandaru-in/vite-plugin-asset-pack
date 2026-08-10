@@ -14,6 +14,8 @@ export interface AssetPackOptions {
   compressImages?: boolean;
   /** Convert png/jpg to WebP automatically. @default false */
   convertToWebp?: boolean;
+  /** Convert png/jpg to AVIF automatically. AVIF offers 50% better compression than WebP. @default false */
+  convertToAvif?: boolean;
   /** Automatically inline assets smaller than this size in bytes. @default 2048 */
   inlineThresholdBytes?: number;
   /** Generate an asset-manifest.json. @default true */
@@ -52,6 +54,7 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
     minifySvg = true,
     compressImages = true,
     convertToWebp = false,
+    convertToAvif = false,
     inlineThresholdBytes = 2048,
     generateManifest = true,
     cache = true,
@@ -120,13 +123,15 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
           promises.push((async () => {
             const origBuffer = Buffer.from(fileAsset.source as Uint8Array);
             const origSize = origBuffer.byteLength;
-            const cacheKey = `raster_${convertToWebp}_${hashString(origBuffer.toString('base64').substring(0, 500))}_${origSize}`;
+            const cacheKey = `raster_${convertToWebp}_${convertToAvif}_${hashString(origBuffer.toString('base64').substring(0, 500))}_${origSize}`;
 
             let optimized = cache ? getCachedAsset(cacheKey) : null;
 
             if (!optimized) {
               let processor = sharp(origBuffer);
-              if (convertToWebp) {
+              if (convertToAvif) {
+                processor = processor.avif({ quality: 80, effort: 6 });
+              } else if (convertToWebp) {
                 processor = processor.webp({ quality: 80, effort: 6 });
               } else if (fileName.endsWith('.png')) {
                 processor = processor.png({ quality: 80, compressionLevel: 9 });
