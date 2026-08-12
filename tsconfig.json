@@ -9,8 +9,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "ignoreDeprecations": "6.0"
+    "outDir": "./dist"
   },
   "include": ["src/**/*"]
 }
