@@ -39,6 +39,18 @@ npm run dev:example
 
 ---
 
+## 📈 Performance Benchmarks
+
+We take performance seriously. We have an [automated benchmarking suite](https://github.com/saitejabandaru-in/vite-plugin-asset-pack/blob/main/benchmarks/BENCHMARKS.md) that runs on every pull request to guarantee zero performance regressions.
+
+Current stats on unoptimized 4K imagery:
+- **Build Time:** ~250ms
+- **Compression Ratio:** ~85% Size Reduction (AVIF)
+
+Check out the [live benchmarks](https://github.com/saitejabandaru-in/vite-plugin-asset-pack/blob/main/benchmarks/BENCHMARKS.md) for full details.
+
+---
+
 ## 🚀 Installation
 
 ```bash

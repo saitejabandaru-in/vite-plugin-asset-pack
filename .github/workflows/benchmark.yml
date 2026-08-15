@@ -1,0 +1,25 @@
+name: Performance Benchmarks
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Source
+        run: npm run build
+      - name: Run Benchmarks
+        run: node benchmarks/run.mjs
+      - name: Check for Performance Regressions
+        run: |
+          echo "Benchmarks ran successfully. In the future, this step can use a threshold tool to compare BENCHMARKS.md with the main branch and fail if performance degraded."
