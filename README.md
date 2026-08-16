@@ -11,6 +11,18 @@ An advanced, enterprise-grade Vite plugin for build-time SVG minification, raste
 
 ---
 
+## 💖 Sponsors
+
+`vite-plugin-asset-pack` is an MIT-licensed open source project. Its ongoing development is made possible by the support of our backers. If your company relies on this project, please consider [becoming a sponsor](https://github.com/saitejabandaru-in/vite-plugin-asset-pack/blob/main/SPONSORS.md).
+
+### 🏆 Enterprise Sponsors
+*Your company logo here (contact us to become an Enterprise Sponsor).*
+
+### 🥇 Gold Sponsors
+*Your company logo here.*
+
+---
+
 ## 🎮 Try it Online
 
 Experience the powerful image compression engine instantly in your browser:

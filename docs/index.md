@@ -21,3 +21,13 @@ features:
   - title: 📊 Beautiful Terminal Reports
     details: Generates a stunning colored summary table of your saved bytes directly in the Vite terminal during build.
 ---
+
+<div style="text-align: center; margin-top: 4rem; margin-bottom: 4rem;">
+  <h2>💖 Platinum Sponsors</h2>
+  <p>Your logo here! <a href="https://github.com/saitejabandaru-in/vite-plugin-asset-pack/blob/main/SPONSORS.md">Become a sponsor.</a></p>
+</div>
+
+<div style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
+  <h3>🥇 Gold Sponsors</h3>
+  <p>Your logo here! <a href="https://github.com/saitejabandaru-in/vite-plugin-asset-pack/blob/main/SPONSORS.md">Become a sponsor.</a></p>
+</div>
