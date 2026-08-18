@@ -100,6 +100,25 @@ export default defineConfig({
 
 ---
 
+## 💻 Global CLI (Framework Agnostic)
+
+Don't use Vite? No problem! `vite-plugin-asset-pack` ships with a standalone global CLI that works with Webpack, Next.js, Nuxt, or any HTML site.
+
+You can instantly optimize an entire directory of assets directly from your terminal:
+
+```bash
+# Optimize the public folder (default)
+npx asset-pack
+
+# Specify a custom directory
+npx asset-pack --dir ./src/assets
+
+# Convert JPEGs and PNGs to Next-Gen AVIF
+npx asset-pack --dir ./public --avif
+```
+
+---
+
 ## ⚙️ Configuration Options
 
 | Option | Type | Default | Description |
