@@ -23,6 +23,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsup src/index.ts src/cli.ts --format cjs,esm --dts",
+    "build:action": "ncc build src/action.ts -o dist/action",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "track": "tsx scripts/track-metrics.ts",
@@ -59,6 +60,7 @@
     "@semantic-release/git": "^10.0.1",
     "@types/node": "^26.1.2",
     "@types/svgo": "^2.6.4",
+    "@vercel/ncc": "^0.45.0",
     "semantic-release": "^25.0.8",
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
@@ -76,6 +78,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
+    "@actions/core": "^3.0.1",
     "picocolors": "^1.1.1",
     "sharp": "^0.35.3",
     "svgo": "^4.0.2"

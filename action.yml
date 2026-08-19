@@ -1,0 +1,30 @@
+name: 'Asset Pack'
+description: 'Build-time SVG minification, raster image compression, and Next-Gen AVIF conversion.'
+author: 'saitejabandaru-in'
+branding:
+  icon: 'image'
+  color: 'blue'
+
+inputs:
+  directory:
+    description: 'The directory to recursively scan and optimize (default: ./public)'
+    required: false
+    default: './public'
+  avif:
+    description: 'Convert JPEGs and PNGs to Next-Gen AVIF formats'
+    required: false
+    default: 'false'
+  webp:
+    description: 'Convert JPEGs and PNGs to WebP formats'
+    required: false
+    default: 'false'
+
+outputs:
+  optimized_count:
+    description: 'The total number of files successfully optimized'
+  bytes_saved:
+    description: 'The total number of bytes saved'
+
+runs:
+  using: 'node20'
+  main: 'dist/action/index.js'

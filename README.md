@@ -119,6 +119,22 @@ npx asset-pack --dir ./public --avif
 
 ---
 
+## 🤖 GitHub Action (CI/CD Optimization)
+
+Want to completely automate asset optimization for your whole team? You can drop the official `vite-plugin-asset-pack` GitHub Action directly into your CI pipeline. It will automatically compress images on every Pull Request before they get merged!
+
+Add this step to your `.github/workflows/` files:
+
+```yaml
+- name: Optimize Assets
+  uses: saitejabandaru-in/vite-plugin-asset-pack@v1
+  with:
+    directory: './public'
+    avif: 'true'
+```
+
+---
+
 ## ⚙️ Configuration Options
 
 | Option | Type | Default | Description |
