@@ -56,7 +56,7 @@
     "vite": "^8.2.1"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/changelog": "^7.0.0",
     "@semantic-release/git": "^10.0.1",
     "@types/node": "^26.1.2",
     "@types/svgo": "^2.6.4",
