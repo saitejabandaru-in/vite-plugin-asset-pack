@@ -18,6 +18,8 @@ export interface AssetPackOptions {
   convertToAvif?: boolean;
   /** Automatically inline assets smaller than this size in bytes. @default 2048 */
   inlineThresholdBytes?: number;
+  /** Generate an asset-dashboard.html visualizer. @default true */
+  generateDashboard?: boolean;
   /** Generate an asset-manifest.json. @default true */
   generateManifest?: boolean;
   /** Enable build caching for faster consecutive builds. @default true */
@@ -56,6 +58,7 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
     convertToWebp = false,
     convertToAvif = false,
     inlineThresholdBytes = 2048,
+    generateDashboard = true,
     generateManifest = true,
     cache = true,
     svgoConfig = { multipass: true },
@@ -161,6 +164,85 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
           type: 'asset',
           fileName: 'asset-manifest.json',
           source: JSON.stringify(Array.from(statsMap.values()), null, 2),
+        });
+      }
+
+      if (generateDashboard && statsMap.size > 0) {
+        const statsArray = Array.from(statsMap.values());
+        const totalOrig = statsArray.reduce((acc, curr) => acc + curr.originalSize, 0);
+        const totalSaved = statsArray.reduce((acc, curr) => acc + curr.savedBytes, 0);
+        
+        const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Pack Dashboard</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 2rem; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 3rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .stat-card { background: #1e293b; padding: 1.5rem; border-radius: 0.5rem; border: 1px solid #334155; text-align: center; }
+        .stat-value { font-size: 2rem; font-weight: bold; color: #38bdf8; margin: 0.5rem 0; }
+        .stat-label { color: #94a3b8; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 0.5rem; overflow: hidden; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #334155; }
+        th { background: #0f172a; font-weight: 600; color: #94a3b8; }
+        .savings-good { color: #10b981; font-weight: bold; }
+        .savings-none { color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📦 Asset Pack Dashboard</h1>
+            <p style="color: #94a3b8">Optimization Results for this Build</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Assets</div>
+                <div class="stat-value">\${statsArray.length}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Original Size</div>
+                <div class="stat-value">\${(totalOrig / 1024).toFixed(2)} KB</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Saved</div>
+                <div class="stat-value" style="color: #10b981">\${(totalSaved / 1024).toFixed(2)} KB</div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Asset</th>
+                    <th>Original</th>
+                    <th>Optimized</th>
+                    <th>Savings</th>
+                </tr>
+            </thead>
+            <tbody>
+                \${statsArray.map(stat => \`
+                <tr>
+                    <td>\${stat.filename}</td>
+                    <td>\${(stat.originalSize / 1024).toFixed(2)} KB</td>
+                    <td>\${(stat.optimizedSize / 1024).toFixed(2)} KB</td>
+                    <td class="\${stat.savedBytes > 0 ? 'savings-good' : 'savings-none'}">-\${stat.savingsRatio}</td>
+                </tr>
+                \`).join('')}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>`;
+
+        this.emitFile({
+          type: 'asset',
+          fileName: 'asset-dashboard.html',
+          source: html,
         });
       }
     },

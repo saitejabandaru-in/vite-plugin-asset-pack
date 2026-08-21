@@ -145,6 +145,7 @@ Add this step to your `.github/workflows/` files:
 | `convertToWebp` | `boolean` | `false` | Automatically convert png/jpg to WebP formats. |
 | `convertToAvif` | `boolean` | `false` | Automatically convert png/jpg to AVIF formats (50% better compression than WebP). |
 | `inlineThresholdBytes` | `number` | `2048` | Assets below this byte size are inlined as Data URIs. Set to `0` to disable. |
+| `generateDashboard` | `boolean` | `true` | Generates a stunning interactive HTML visualization (`asset-dashboard.html`) in your `dist` folder. |
 | `generateManifest` | `boolean` | `true` | Emits `asset-manifest.json` with optimization stats. |
 | `cache` | `boolean` | `true` | Caches compressed outputs to `node_modules/.cache/vite-plugin-asset-pack` for rapid rebuilds. |
 
