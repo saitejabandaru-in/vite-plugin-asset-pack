@@ -18,6 +18,8 @@ export interface AssetPackOptions {
   convertToAvif?: boolean;
   /** Automatically inline assets smaller than this size in bytes. @default 2048 */
   inlineThresholdBytes?: number;
+  /** Automatically inject <link rel="preload"> for critical assets to improve LCP. @default [] */
+  preloadElements?: string[];
   /** Generate an asset-dashboard.html visualizer. @default true */
   generateDashboard?: boolean;
   /** Generate an asset-manifest.json. @default true */
@@ -58,6 +60,7 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
     convertToWebp = false,
     convertToAvif = false,
     inlineThresholdBytes = 2048,
+    preloadElements = [],
     generateDashboard = true,
     generateManifest = true,
     cache = true,
@@ -92,6 +95,31 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
 
     configResolved(resolvedConfig) {
       viteConfig = resolvedConfig;
+    },
+
+    transformIndexHtml(html) {
+      if (!preloadElements || preloadElements.length === 0) return;
+
+      return preloadElements.map(asset => {
+        let href = asset;
+        
+        // Intelligent format resolution
+        if (convertToAvif && /\.(png|jpe?g)$/i.test(asset)) {
+          href = asset.replace(/\.(png|jpe?g)$/i, '.avif');
+        } else if (convertToWebp && /\.(png|jpe?g)$/i.test(asset)) {
+          href = asset.replace(/\.(png|jpe?g)$/i, '.webp');
+        }
+
+        return {
+          tag: 'link',
+          attrs: {
+            rel: 'preload',
+            as: 'image',
+            href
+          },
+          injectTo: 'head'
+        };
+      });
     },
 
     async generateBundle(_, bundle) {

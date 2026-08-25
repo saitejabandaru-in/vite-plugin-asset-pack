@@ -72,6 +72,8 @@ async function runBenchmark() {
     plugins: [
       assetPackPlugin({
         convertToAvif: true,
+        generateDashboard: true,
+        preloadElements: ['/assets/test.jpg'],
         cache: false // Disable cache for accurate benchmarking
       })
     ]
