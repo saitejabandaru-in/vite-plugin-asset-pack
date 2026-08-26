@@ -91,6 +91,7 @@ export default defineConfig({
       convertToWebp: true, // Auto-convert PNG/JPG to WebP!
       convertToAvif: true, // Or use AVIF for 50% better compression than WebP!
       preloadElements: ['hero.jpg', 'logo.svg'], // Automatically injects <link rel="preload"> for LCP optimization
+      a11y: { enforceAltText: 'warn' }, // Built-in Accessibility Auditor
       inlineThresholdBytes: 2048,
       generateManifest: true,
       cache: true,
@@ -146,6 +147,7 @@ Add this step to your `.github/workflows/` files:
 | `convertToWebp` | `boolean` | `false` | Automatically convert png/jpg to WebP formats. |
 | `convertToAvif` | `boolean` | `false` | Automatically convert png/jpg to AVIF formats (50% better compression than WebP). |
 | `preloadElements` | `string[]` | `[]` | Automatically inject `<link rel="preload">` into HTML for LCP optimization. intelligently resolves `.avif`/`.webp` paths. |
+| `a11y` | `object` | `{ enforceAltText: 'warn' }` | Built-in Accessibility Auditor. Validates `<img>` tags for `alt` attributes. Set to `{ enforceAltText: 'error' }` to fail the build. |
 | `inlineThresholdBytes` | `number` | `2048` | Assets below this byte size are inlined as Data URIs. Set to `0` to disable. |
 | `generateDashboard` | `boolean` | `true` | Generates a stunning interactive HTML visualization (`asset-dashboard.html`) in your `dist` folder. |
 | `generateManifest` | `boolean` | `true` | Emits `asset-manifest.json` with optimization stats. |

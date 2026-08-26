@@ -24,6 +24,8 @@ export interface AssetPackOptions {
   generateDashboard?: boolean;
   /** Generate an asset-manifest.json. @default true */
   generateManifest?: boolean;
+  /** Built-in Accessibility Auditor. Validates <img> tags for alt attributes. @default { enforceAltText: 'warn' } */
+  a11y?: { enforceAltText?: 'warn' | 'error' | 'off' };
   /** Enable build caching for faster consecutive builds. @default true */
   cache?: boolean;
 }
@@ -63,6 +65,7 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
     preloadElements = [],
     generateDashboard = true,
     generateManifest = true,
+    a11y = { enforceAltText: 'warn' },
     cache = true,
     svgoConfig = { multipass: true },
   } = options;
@@ -98,6 +101,23 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
     },
 
     transformIndexHtml(html) {
+      // A11y Auditor
+      if (a11y.enforceAltText && a11y.enforceAltText !== 'off') {
+        const imgRegex = /<img\s+([^>]*?)>/gi;
+        let match;
+        while ((match = imgRegex.exec(html)) !== null) {
+          const attributes = match[1];
+          if (!/alt\s*=\s*(['"])(.*?)\1/i.test(attributes)) {
+            const msg = `[Asset Pack A11y] Missing 'alt' attribute on <img> tag in index.html:\n  ${match[0]}`;
+            if (a11y.enforceAltText === 'error') {
+              throw new Error(msg);
+            } else {
+              console.log(pc.yellow('\n' + msg + '\n'));
+            }
+          }
+        }
+      }
+
       if (!preloadElements || preloadElements.length === 0) return;
 
       return preloadElements.map(asset => {
