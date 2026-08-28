@@ -24,6 +24,8 @@ export interface AssetPackOptions {
   generateDashboard?: boolean;
   /** Generate an asset-manifest.json. @default true */
   generateManifest?: boolean;
+  /** Automatically inject width/height attributes into <img> tags to prevent CLS. @default true */
+  autoInjectDimensions?: boolean;
   /** Built-in Accessibility Auditor. Validates <img> tags for alt attributes. @default { enforceAltText: 'warn' } */
   a11y?: { enforceAltText?: 'warn' | 'error' | 'off' };
   /** Enable build caching for faster consecutive builds. @default true */
@@ -65,6 +67,7 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
     preloadElements = [],
     generateDashboard = true,
     generateManifest = true,
+    autoInjectDimensions = true,
     a11y = { enforceAltText: 'warn' },
     cache = true,
     svgoConfig = { multipass: true },
@@ -143,6 +146,7 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
     },
 
     async generateBundle(_, bundle) {
+      const dimensionsMap: Record<string, { width: number, height: number }> = {};
       const promises: Promise<void>[] = [];
 
       for (const [fileName, fileAsset] of Object.entries(bundle)) {
@@ -173,6 +177,17 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
         if (isRaster && compressImages && fileAsset.source instanceof Uint8Array) {
           promises.push((async () => {
             const origBuffer = Buffer.from(fileAsset.source as Uint8Array);
+            
+            // Collect dimensions for Auto-CLS Injector
+            if (autoInjectDimensions) {
+              try {
+                const metadata = await sharp(origBuffer).metadata();
+                if (metadata.width && metadata.height) {
+                  dimensionsMap[fileName] = { width: metadata.width, height: metadata.height };
+                }
+              } catch (e) {}
+            }
+
             const origSize = origBuffer.byteLength;
             const cacheKey = `raster_${convertToWebp}_${convertToAvif}_${hashString(origBuffer.toString('base64').substring(0, 500))}_${origSize}`;
 
@@ -206,6 +221,36 @@ export function assetPackPlugin(options: AssetPackOptions = {}): Plugin {
       }
 
       await Promise.all(promises);
+
+      // 3. Inject Auto-Dimensions into index.html
+      if (autoInjectDimensions && bundle['index.html'] && (bundle['index.html'] as any).source) {
+        let html = (bundle['index.html'] as any).source as string;
+        const imgRegex = /<img\s+([^>]*?)>/gi;
+        const matches = [...html.matchAll(imgRegex)];
+        
+        for (const match of matches) {
+          const attributes = match[1];
+          const hasWidth = /width\s*=/i.test(attributes);
+          const hasHeight = /height\s*=/i.test(attributes);
+          
+          if (!hasWidth || !hasHeight) {
+            const srcMatch = attributes.match(/src\s*=\s*(['"])(.*?)\1/i);
+            if (srcMatch) {
+              const src = srcMatch[2]; // e.g., /assets/test-CKw_52t2.jpg
+              
+              // Find the corresponding file in dimensionsMap
+              const matchingFileName = Object.keys(dimensionsMap).find(name => src.endsWith(name));
+              
+              if (matchingFileName) {
+                const { width, height } = dimensionsMap[matchingFileName];
+                const newTag = match[0].replace(/<img/i, `<img width="${width}" height="${height}"`);
+                html = html.replace(match[0], newTag);
+              }
+            }
+          }
+        }
+        (bundle['index.html'] as any).source = html;
+      }
 
       if (generateManifest && statsMap.size > 0) {
         this.emitFile({
