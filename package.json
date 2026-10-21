@@ -53,7 +53,7 @@
     "examples/*"
   ],
   "peerDependencies": {
-    "vite": "^8.2.1"
+    "vite": "^8.2.4"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
@@ -65,7 +65,7 @@
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
     "typescript": "^5.7.3",
-    "vite": "^8.2.1",
+    "vite": "^8.2.4",
     "vitepress": "^1.6.4",
     "vitest": "^1.2.1",
     "vue": "^3.5.40"
